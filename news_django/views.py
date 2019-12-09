@@ -1,9 +1,12 @@
+import requests
+import os
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import View, generic
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
@@ -38,7 +41,7 @@ class DetailsView(View):
             "comments": NewComment.objects.filter(new=new),
             "comment_form": NewCommentCreationForm,
         })
-        
+
     def post(self, request, id):
         new = New.objects.get(pk=id)
 
@@ -65,3 +68,14 @@ class RegisterView(generic.CreateView):
     form_class = MyUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration.html'
+
+    def form_valid(self, form):
+        r = requests.get(
+            "https://api.mailgun.net/v4/address/validate",
+            auth=("api", os.environ["MAILGUN_API_KEY"]),
+            params={"address": self.request.POST.get("email")})
+        is_valid_email = r.json()["result"] == "deliverable"
+        if not is_valid_email:
+            raise ValidationError("Invalid email", code="invalid_email")
+
+        return super().form_valid(form)
