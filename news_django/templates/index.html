@@ -22,13 +22,13 @@
                 <a class="p-2 text-dark" href="#">Archive</a>
                 <a class="p-2 text-dark" href="#">Writers</a>
                 <a class="p-2 text-dark" href="#">About</a>
+                <a class="p-2 text-danger" href="{% url 'add' %}">Write news</a>
             </nav>
 
             {% if user.is_authenticated %}
-                Hello,
                 <a href='#'>
                     <i class="fa fa-user"></i>
-                    {{ user.first_name }}
+                    {{ user.email }}
                 </a>
                 <a href="{% url 'logout' %}" class="btn btn-outline-primary ml-2">
                     <i class="fa fa-sign-out"></i>
@@ -48,6 +48,14 @@
     </div>
 
     <div class="container mr-auto ml-auto">
+        {% if messages %}
+            <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+
         {% block content %}
         {% endblock %}
 
