@@ -16,13 +16,12 @@
 </head>
 <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-            <h5 class="my-0 mr-md-auto font-weight-normal">Django News</h5>
+            <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{% url 'index' %}">Django News</a></h5>
             <nav class="my-2 my-md-0 mr-md-3">
                 <a class="p-2 text-dark" href="{% url 'index' %}">News</a>
-                <a class="p-2 text-dark" href="#">Archive</a>
-                <a class="p-2 text-dark" href="#">Writers</a>
-                <a class="p-2 text-dark" href="#">About</a>
-                <a class="p-2 text-danger" href="{% url 'add' %}">Write news</a>
+                <a class="p-2 text-dark">Writers</a>
+                <a class="p-2 text-dark">About</a>
+                <a class="p-2 text-danger" href="{% url 'add' %}">+ Write News</a>
             </nav>
 
             {% if user.is_authenticated %}

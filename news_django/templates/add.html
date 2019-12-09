@@ -1,9 +1,15 @@
 {% extends 'index.html' %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({selector:'textarea'});
+    </script>
+
     <h2>Add news</h2>
-    <form method="post">
+    <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
         <button type="submit" class="btn btn-primary">Submit</button>

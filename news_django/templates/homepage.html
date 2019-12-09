@@ -6,17 +6,20 @@
 {% endblock %}
 
 {% block content %}
+    
+    <h2>Latest news</h2>
     <div>
     {% for new in news %}
         <div class="card mb-3">
             <div class="card-body">
+                <small class="float-right text-secondary">{{ new.date_created }}</small>
                 <h5 class="card-title">{{ new.title }}</h5>
-                <p class="card-text">{{ new.content }}</p>
+                <p class="card-text">{{ new.content | safe }}</p>
                 <small>
                     {{ new.user.first_name }}
                     {{ new.user.last_name }}
                 </small>
-                <a href="{% url 'details' new.id %}" class="btn btn-primary">Details</a>
+                <a href="{% url 'details' new.id %}">More details</a>
             </div>
         </div>
     {% endfor %}

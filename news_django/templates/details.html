@@ -4,7 +4,7 @@
 {% block content %}
     <h2>{{ new.title }}</h2>
     <div class="mb-4">
-        {{ new.content }}
+        {{ new.content | safe }}
     </div>
 
     <h4>Comments</h4>
