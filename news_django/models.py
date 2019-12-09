@@ -7,3 +7,24 @@ class MyUser(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+class New(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, blank=False)
+    content = models.TextField()
+    flag = models.IntegerField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.text} (user: {self.user.email})"
+
+class NewComment(models.Model):
+    new = models.ForeignKey(New, on_delete=models.CASCADE)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.text} (from: {self.user.email})"
