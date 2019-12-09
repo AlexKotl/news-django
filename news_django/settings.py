@@ -130,3 +130,8 @@ AUTH_USER_MODEL = 'news_django.MyUser'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'), )
 
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ['EMAIL_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+EMAIL_USE_TLS = True

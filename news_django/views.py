@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.conf import settings
+from django.core.mail import send_mail
 from .forms import MyUserCreationForm, NewCreationForm, NewCommentCreationForm
 from .models import MyUser, New, NewComment
 
@@ -36,15 +38,25 @@ class DetailsView(View):
             "comments": NewComment.objects.filter(new=new),
             "comment_form": NewCommentCreationForm,
         })
+        
     def post(self, request, id):
+        new = New.objects.get(pk=id)
+
         try:
             comment = NewComment(
                 text=request.POST.get('text'),
-                new=New.objects.get(pk=id),
+                new=new,
                 user=MyUser.objects.get(pk=request.user.id))
             comment.save()
         except:
             messages.error(self.request, "Failed to add comment. Contact administrator.")
+            return HttpResponseRedirect("{}".format(reverse('details', args=(id,))))
+
+        send_mail(subject="New comment",
+            message="You received new comment!",
+            from_email="",
+            recipient_list=[new.user.email],
+            fail_silently=not settings.DEBUG)
 
         messages.success(self.request, "Comment added")
         return HttpResponseRedirect("{}".format(reverse('details', args=(id,))))
