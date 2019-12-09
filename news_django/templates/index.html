@@ -15,39 +15,45 @@
 
 </head>
 <body>
-    <div class="top-menu">
-        <div class="top-menu-container clearfix">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Django News</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="{% url 'index' %}">News</a>
+                <a class="p-2 text-dark" href="#">Archive</a>
+                <a class="p-2 text-dark" href="#">Writers</a>
+                <a class="p-2 text-dark" href="#">About</a>
+            </nav>
 
+            {% if user.is_authenticated %}
+                Hello,
+                <a href='{% url 'profile' %}'>
+                    <i class="fa fa-user"></i>
+                    {{ user.first_name }}
+                </a>
+                <a href="{% url 'logout' %}" class="btn btn-outline-primary">
+                    <i class="fa fa-sign-out"></i>
+                    Log out
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-primary mr-2">
+                    <i class="fa fa-sign-in"></i>
+                    Log in
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-primary">
+                    <i class="fa fa-user-plus"></i>
+                    Sign up
+                </a>
+            {% endif %}
 
-            <div class="menu user-block float-right">
-                {% if user.is_authenticated %}
-                    Hello,
-                    <a href='{% url 'profile' %}'>
-                        <i class="fa fa-user"></i>
-                        {{ user.first_name }}
-                    </a>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-primary">
-                        <i class="fa fa-sign-out"></i>
-                        Log out
-                    </a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary">
-                        <i class="fa fa-sign-in"></i>
-                        Log in
-                    </a>
-                    <a href="{% url 'register' %}" class="btn btn-primary">
-                        <i class="fa fa-user-plus"></i>
-                        Sign up
-                    </a>
-                {% endif %}
-            </div>
-
-        </div>
     </div>
 
-    <div class="">
+    <div class="container mr-auto ml-auto">
         {% block content %}
         {% endblock %}
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            Developed by <a href="https://github.com/AlexKotl" target="_blank">github.com/AlexKotl</a>
+        </footer>
     </div>
 
 </body>
