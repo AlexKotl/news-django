@@ -7,11 +7,13 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import MyUserCreationForm, NewCreationForm
-from .models import MyUser
+from .models import MyUser, New, NewComment
 
 class IndexView(View):
     def get(self, request):
-        return render(request, 'homepage.html')
+        return render(request, 'homepage.html', {
+            "news": New.objects.filter().order_by("-pk")
+        })
 
 class AddView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = NewCreationForm

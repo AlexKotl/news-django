@@ -6,7 +6,19 @@
 {% endblock %}
 
 {% block content %}
-    Homepage
-
+    <div>
+    {% for new in news %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <a href=""><h5 class="card-title">{{ new.title }}</h5></a>
+                <p class="card-text">{{ new.content }}</p>
+                <a href="#" class="card-link">
+                    {{ new.user.first_name }}
+                    {{ new.user.last_name }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}
