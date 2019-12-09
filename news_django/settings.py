@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap4',
+    'news_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'news_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
     }
 }
 
@@ -123,6 +124,8 @@ USE_TZ = True
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+AUTH_USER_MODEL = 'news_django.MyUser'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'), )
