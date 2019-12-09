@@ -2,16 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import View, generic
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
+from .forms import MyUserCreationForm
 
 class IndexView(View):
     def get(self, request):
         return render(request, 'homepage.html')
 
 class RegisterView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = MyUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration.html'

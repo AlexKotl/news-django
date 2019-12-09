@@ -26,11 +26,11 @@
 
             {% if user.is_authenticated %}
                 Hello,
-                <a href='{% url 'profile' %}'>
+                <a href='#'>
                     <i class="fa fa-user"></i>
                     {{ user.first_name }}
                 </a>
-                <a href="{% url 'logout' %}" class="btn btn-outline-primary">
+                <a href="{% url 'logout' %}" class="btn btn-outline-primary ml-2">
                     <i class="fa fa-sign-out"></i>
                     Log out
                 </a>
