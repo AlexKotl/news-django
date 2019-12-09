@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import MyUserCreationForm, NewCreationForm
+from .forms import MyUserCreationForm, NewCreationForm, NewCommentCreationForm
 from .models import MyUser, New, NewComment
 
 class IndexView(View):
@@ -27,6 +27,27 @@ class AddView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         self.object.save()
         messages.success(self.request, self.success_message) # force add message, mixin will not work in overrided method
         return HttpResponseRedirect(self.get_success_url())
+
+class DetailsView(View):
+    def get(self, request, id):
+        new = New.objects.get(pk=id)
+        return render(request, 'details.html', {
+            "new": new,
+            "comments": NewComment.objects.filter(new=new),
+            "comment_form": NewCommentCreationForm,
+        })
+    def post(self, request, id):
+        try:
+            comment = NewComment(
+                text=request.POST.get('text'),
+                new=New.objects.get(pk=id),
+                user=MyUser.objects.get(pk=request.user.id))
+            comment.save()
+        except:
+            messages.error(self.request, "Failed to add comment. Contact administrator.")
+
+        messages.success(self.request, "Comment added")
+        return HttpResponseRedirect("{}".format(reverse('details', args=(id,))))
 
 class RegisterView(generic.CreateView):
     form_class = MyUserCreationForm

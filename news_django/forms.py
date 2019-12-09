@@ -16,3 +16,8 @@ class NewCreationForm(forms.ModelForm):
     class Meta:
         model = New
         fields = ('title', 'content',)
+
+class NewCommentCreationForm(forms.ModelForm):
+    class Meta:
+        model = NewComment
+        fields = ('text',)

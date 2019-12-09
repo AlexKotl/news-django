@@ -10,12 +10,13 @@
     {% for new in news %}
         <div class="card mb-3">
             <div class="card-body">
-                <a href=""><h5 class="card-title">{{ new.title }}</h5></a>
+                <h5 class="card-title">{{ new.title }}</h5>
                 <p class="card-text">{{ new.content }}</p>
-                <a href="#" class="card-link">
+                <small>
                     {{ new.user.first_name }}
                     {{ new.user.last_name }}
-                </a>
+                </small>
+                <a href="{% url 'details' new.id %}" class="btn btn-primary">Details</a>
             </div>
         </div>
     {% endfor %}
