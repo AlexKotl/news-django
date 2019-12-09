@@ -10,9 +10,9 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
-from django.core.mail import send_mail
 from .forms import MyUserCreationForm, NewCreationForm, NewCommentCreationForm
 from .models import MyUser, New, NewComment
+from .tasks import mail
 
 class IndexView(View):
     def get(self, request):
@@ -55,11 +55,8 @@ class DetailsView(View):
             messages.error(self.request, "Failed to add comment. Contact administrator.")
             return HttpResponseRedirect("{}".format(reverse('details', args=(id,))))
 
-        send_mail(subject="New comment",
-            message="You received new comment!",
-            from_email="",
-            recipient_list=[new.user.email],
-            fail_silently=not settings.DEBUG)
+
+        mail.delay(new.user.email, "New comment", "You received new comment!")
 
         messages.success(self.request, "Comment added")
         return HttpResponseRedirect("{}".format(reverse('details', args=(id,))))
