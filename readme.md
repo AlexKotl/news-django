@@ -17,3 +17,6 @@ This is a simple news site built with Django, Celery, Poetry and Bootstrap 4.
 - Make sure you set required environment variables, sample could be found in `.env.sample` file
 - Start Celery `celery -A news_django worker -l info`
 - Start local server `python manage.py runserver`
+
+### Screenshot
+![alt text](https://github.com/AlexKotl/news-django/blob/master/static/img/screenshot.png?raw=true) ![alt text](https://github.com/AlexKotl/news-django/blob/master/static/img/screenshot.png?raw=true)
