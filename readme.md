@@ -19,4 +19,4 @@ This is a simple news site built with Django, Celery, Poetry and Bootstrap 4.
 - Start local server `python manage.py runserver`
 
 ### Screenshot
-![alt text](https://github.com/AlexKotl/news-django/blob/master/static/img/screenshot.png?raw=true | width=440)
+![alt text](https://github.com/AlexKotl/news-django/blob/master/static/img/screenshot.png?raw=true)
